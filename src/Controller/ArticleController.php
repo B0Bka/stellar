@@ -3,8 +3,9 @@ namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class ArticleController
+class ArticleController extends AbstractController
 {
     /**
      * @Route("/")
@@ -19,6 +20,14 @@ class ArticleController
      */
     public function show($id)
     {
-        return new Response(sprintf('I am showing article № %s to you.', $id));
+        $comments = [
+            'First',
+            'Second',
+            'Third'
+        ];
+        return $this->render('article/show.html.twig',[
+            'title' => ucwords(str_replace('-', ' ', $id)),
+            'comments' => $comments
+        ]);
     }
 }
