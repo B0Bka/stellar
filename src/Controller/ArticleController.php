@@ -8,15 +8,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ArticleController extends AbstractController
 {
     /**
-     * @Route("/")
+     * @Route("/", name="app_homepage")
      */
     public function homePage()
     {
-        return new Response('Let start!');
+        return $this->render('article/homepage.html.twig');
     }
 
     /**
-     * @Route("/article/{id}/")
+     * @Route("/article/{id}/", name="article_show")
      */
     public function show($id)
     {
