@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Nexy\Slack\Client;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,8 +21,13 @@ class ArticleController extends AbstractController
     /**
      * @Route("/article/{id}/", name="article_show")
      */
-    public function show($id, MarkdownHelper $markdownHelper)
+    public function show($id, MarkdownHelper $markdownHelper, Client $slack)
     {
+        if ($id === 'slack') {
+            $message = $slack->createMessage()->from('Ghost')->withIcon(':ghost:')->setText('Ummmmmm.....');
+            $slack->sendMessage($message);
+        }
+
         $comments = [
             'First',
             'Second',
