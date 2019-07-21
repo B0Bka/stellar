@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Comment;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -19,32 +20,24 @@ class CommentRepository extends ServiceEntityRepository
         parent::__construct($registry, Comment::class);
     }
 
-    // /**
-    //  * @return Comment[] Returns an array of Comment objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @param string|null $term
+     */
+    public function getWithSearchQueryBuilder(?string $term): QueryBuilder
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
+        $db = $this->createQueryBuilder('c')
+                    ->innerJoin('c.article', 'a')
+                    ->addSelect('a')
         ;
-    }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Comment
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        if($term)
+        {
+            $db->andWhere('c.content LIKE :term OR c.authorName LIKE :term OR a.title LIKE :term')
+                ->setParameter('term', '%'.$term.'%');
+        }
+
+        return $db
+            ->orderBy('c.createdAt', 'DESC');
+
     }
-    */
 }

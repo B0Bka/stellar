@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Repository\ArticleRepository;
+use App\Repository\CommentRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,22 +36,14 @@ class ArticleController extends AbstractController
     /**
      * @Route("/article/{slug}/", name="article_show")
      */
-    public function show(Article $article, SlackClient $slack)
+    public function show(Article $article, SlackClient $slack, CommentRepository $commentRepository)
     {
         if ($article->getSlug() === 'slack') {
             $slack->sendMessage('New Ghost', 'Grrrrr...');
         }
 
-        $comments = [
-            'First',
-            'Second',
-            'Third'
-        ];
-
-
         return $this->render('article/show.html.twig',[
-            'article' => $article,
-            'comments' => $comments
+            'article' => $article
         ]);
     }
 

@@ -170,6 +170,11 @@ html {height:100%}
     background-color: #fff;
 }
 
+.show-article-container.show-article-container-border-green {
+    border-top: 3px solid green;
+    border-radius: 3px;
+}
+
 .show-article-img {
     width: 250px;
     height: auto;
@@ -203,6 +208,10 @@ html {height:100%}
     font-size: 1.5em;
 }
 
+.comment-container {
+    max-width: 600px;
+}
+
 .comment-img {
     width: 50px;
     height: auto;
@@ -221,19 +230,13 @@ html {height:100%}
     .comment-form {
         min-width: 260px;
     }
+    .comment-container {
+        max-width: 280px;
+    }
 }
 
-.btn-info{
-    border: none;
-    background-image: linear-gradient(to left, #17a2b8,#f2ff33,#17a2b8);
-    background-size: 200%;
-    transition: 0.6s;
-    color: #000;
-}
-.btn-info:hover{
-    background-position: right;
-    color: #000;
-}
+
+
 /* FOOTER */
 
 .footer {
